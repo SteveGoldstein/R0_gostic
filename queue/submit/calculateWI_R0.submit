@@ -8,10 +8,16 @@ executable = Rscript
 transfer_executable = false
 requirements = (Has_AVX2 =?= true)
 
-countyIndex = $$([$(PROCESS)+1])
-args = --vanilla JFMR.withInput.R  -inFile WI.rds -outFile R0.csv -county $(countyIndex)
+
+TMP = $(PROCESS) + 1
+countyIndex = $INT(TMP)
+OUTFILE = R0.$(CLUSTER).$(PROCESS).csv
+
+args = --vanilla JFMR.withInput.R  -inFile WI.rds -outFile $(OUTFILE) -countyIndex $(countyIndex)
 
 transfer_input_files = bin/JFMR.withInput.R, data/WI.rds
+transfer_output_remaps = "$(OUTFILE) = outdir/$(OUTFILE)"
+
 output    = outdir/wiR0.$(CLUSTER).$(PROCESS).out
 error  = queue/error/wiR0.$(CLUSTER).$(PROCESS).err
 log    = queue/log/wiR0.$(CLUSTER).log
@@ -20,5 +26,5 @@ request_memory = 2 GB
 request_disk  =  10 GB
 request_cpus  = 1
 
-queue 72
+queue 5
 

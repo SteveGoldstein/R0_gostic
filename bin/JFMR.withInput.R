@@ -141,7 +141,7 @@ estimation_data$county = rep(one_county, dim(estimation_data)[1] )
 final_df = rbind(final_df, estimation_data)
 
 write.table(final_df, args$outFile,
-            col.names=F,row.names = FALSE, 
-            sep = "\t", quote = FALSE)
+            col.names=TRUE,row.names = FALSE, 
+            sep = ",", quote = FALSE)
 
 q()
