@@ -1,0 +1,24 @@
+universe = docker
+
+epiVersion = v1.0.0
+epiTag     = github
+docker_image = steveg53703/epinow2-$(epiVersion):$(epiTag)
+
+executable = Rscript
+transfer_executable = false
+requirements = (Has_AVX2 =?= true)
+
+countyIndex = $$([$(PROCESS)+1])
+args = --vanilla JFMR.withInput.R  -inFile WI.rds -outFile R0.csv -county $(countyIndex)
+
+transfer_input_files = bin/JFMR.withInput.R, data/WI.rds
+output    = outdir/wiR0.$(CLUSTER).$(PROCESS).out
+error  = queue/error/wiR0.$(CLUSTER).$(PROCESS).err
+log    = queue/log/wiR0.$(CLUSTER).log
+
+request_memory = 2 GB
+request_disk  =  10 GB
+request_cpus  = 1
+
+queue 72
+
