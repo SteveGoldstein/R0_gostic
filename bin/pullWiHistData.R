@@ -30,7 +30,10 @@ args <- R.utils::commandArgs(trailingOnly = TRUE,
 
 
 # data read.
-jsonResponse<-GET("https://opendata.arcgis.com/datasets/b913e9591eae4912b33dc5b4e88646c5_10.geojson")
+# jsonURL <- "https://opendata.arcgis.com/datasets/b913e9591eae4912b33dc5b4e88646c5_10.geojson"
+jsonURL <- "https://opendata.arcgis.com/datasets/89d7a90aafa24519847c89b249be96ca_13.geojson"
+
+jsonResponse<-GET(jsonURL)
 http_type(jsonResponse)
 jsonResponseText <- content(jsonResponse, as = "text") #JSON response structured into raw data
 dataJSON = fromJSON(jsonResponseText)

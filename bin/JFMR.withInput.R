@@ -129,8 +129,8 @@ d2 <- select(d, date, cases_corrected) %>%
 estimates2 <- EpiNow2::epinow(reported_cases = d2, 
                               generation_time = generation_time,
                               delays = list(incubation_period, reporting_delay),
-                              horizon = 7, samples = 35, warmup = 10, 
-                              cores = 1, chains = 1, verbose = TRUE, 
+                              horizon = 7, samples = 1000, warmup = 200, 
+                              cores = 2, chains = 2, verbose = TRUE, 
                               adapt_delta = 0.95)
 
 future::plan(sequential)
