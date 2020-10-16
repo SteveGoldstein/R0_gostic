@@ -18,7 +18,7 @@ args = --vanilla JFMR.withInput.R  -inFile WI.rds -outFile $(OUTFILE) -countyInd
 transfer_input_files = bin/JFMR.withInput.R, data/WI.rds
 transfer_output_remaps = "$(OUTFILE) = outdir/$(OUTFILE)"
 
-output    = outdir/wiR0.$(CLUSTER).$(PROCESS).out
+output    = queue/out/wiR0.$(CLUSTER).$(PROCESS).out
 error  = queue/error/wiR0.$(CLUSTER).$(PROCESS).err
 log    = queue/log/wiR0.$(CLUSTER).log
 
