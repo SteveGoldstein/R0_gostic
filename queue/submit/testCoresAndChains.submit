@@ -1,0 +1,33 @@
+### condor_submit -append CPUS=3 -append CHAINS=3
+
+universe = docker
+
+epiVersion = v1.0.0
+epiTag     = github
+docker_image = steveg53703/epinow2-$(epiVersion):$(epiTag)
+
+executable = Rscript
+transfer_executable = false
+requirements = (Has_AVX2 =?= true)
+
+TMP = $(PROCESS) + 1
+
+countyIndex = $INT(TMP)
+OUTFILE = R0.$(CLUSTER).$(PROCESS).csv
+
+args = --vanilla JFMR.testCoresAndChains.R  -inFile WI.rds -outFile $(OUTFILE) -chains $(CHAINS) -cores $(CPUS) -countyIndex $(countyIndex)
+
+transfer_input_files = bin/JFMR.testCoresAndChains.R, data/WI.rds
+transfer_output_remaps = "$(OUTFILE) = outdir/$(OUTFILE)"
+
+output    = queue/out/wiR0.$(CLUSTER).$(PROCESS).out
+error  = queue/error/wiR0.$(CLUSTER).$(PROCESS).err
+log    = queue/log/wiR0.$(CLUSTER).cores$(CPUS).chains$(CHAINS).log
+
+request_memory = 1 GB
+request_disk  =  1 GB
+request_cpus  = $(CPUS)
+
+#queue 72
+queue 2
+
