@@ -1,3 +1,4 @@
+### condor_submit -append CPUS=2 -append CHAINS=2 ..
 universe = docker
 
 epiVersion = v1.0.0
@@ -15,7 +16,7 @@ countyIndex = $INT(TMP)
 INFILE = data/WI.2020-10-18.rds
 OUTFILE = R0.$(CLUSTER).$(PROCESS).csv
 
-args = --vanilla JFMR.withInput.R  -inFile $BASENAME(INFILE) -outFile $(OUTFILE) -countyIndex $(countyIndex)
+args = --vanilla JFMR.withInput.R  -inFile $BASENAME(INFILE) -outFile $(OUTFILE) -chains $(CHAINS) -cores $(CPUS) -countyIndex $(countyIndex)
 
 transfer_input_files = bin/JFMR.withInput.R, $(INFILE)
 transfer_output_remaps = "$(OUTFILE) = outdir/$(OUTFILE)"
@@ -24,8 +25,12 @@ output    = queue/out/wiR0.$(CLUSTER).$(PROCESS).out
 error  = queue/error/wiR0.$(CLUSTER).$(PROCESS).err
 log    = queue/log/wiR0.$(CLUSTER).log
 
-request_memory = 1 GB
+## defaults  (override with -append on the cmd line.)
+CHAINS = 2
+CPUS = 2
+
+request_memory = 10 GB
 request_disk  =  1 GB
-request_cpus  = 2
+request_cpus  = $(CPUS)
 
 queue 72
