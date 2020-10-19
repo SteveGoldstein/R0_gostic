@@ -31,7 +31,8 @@ args <- R.utils::commandArgs(trailingOnly = TRUE,
 
 # data read.
 # jsonURL <- "https://opendata.arcgis.com/datasets/b913e9591eae4912b33dc5b4e88646c5_10.geojson"
-jsonURL <- "https://opendata.arcgis.com/datasets/89d7a90aafa24519847c89b249be96ca_13.geojson"
+#jsonURL <- "https://opendata.arcgis.com/datasets/89d7a90aafa24519847c89b249be96ca_13.geojson"
+jsonURL <- "https://opendata.arcgis.com/datasets/5374188992374b318d3e2305216ee413_12.geojson"
 
 jsonResponse<-GET(jsonURL)
 http_type(jsonResponse)
