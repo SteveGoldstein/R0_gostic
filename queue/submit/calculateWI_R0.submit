@@ -12,11 +12,12 @@ requirements = (Has_AVX2 =?= true)
 TMP = $(PROCESS) + 1
 
 countyIndex = $INT(TMP)
+INFILE = data/WI.2020-10-18.rds
 OUTFILE = R0.$(CLUSTER).$(PROCESS).csv
 
-args = --vanilla JFMR.withInput.R  -inFile WI.rds -outFile $(OUTFILE) -countyIndex $(countyIndex)
+args = --vanilla JFMR.withInput.R  -inFile $BASENAME(INFILE) -outFile $(OUTFILE) -countyIndex $(countyIndex)
 
-transfer_input_files = bin/JFMR.withInput.R, data/WI.rds
+transfer_input_files = bin/JFMR.withInput.R, $(INFILE)
 transfer_output_remaps = "$(OUTFILE) = outdir/$(OUTFILE)"
 
 output    = queue/out/wiR0.$(CLUSTER).$(PROCESS).out
