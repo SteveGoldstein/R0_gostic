@@ -1,2 +1,6 @@
  for i in {0..71}; do cat  outdir/2020-09-10/R0.8013221.$i.csv 2> /dev/null; done|perl -nale 'if ($.==1) {print; next} print unless (/^date/);'  > outdir/2020-09-10/R0.8013221.allCounties.csv
 
+
+ for i in {0..71}; do cat outdir/2020-10-18_0/R0.*.$i.csv 2> /dev/null; done|perl -nale 'if ($.==1) {print; next} print unless (/^date/);'  > outdir/2020-10-18_0/R0.8013882.allCounties.csv
+
+for i in {0..71}; do cat outdir/2020-10-18_1/R0.*.$i.csv 2> /dev/null; done|perl -nale 'if ($.==1) {print; next} print unless (/^date/);'  > outdir/2020-10-18_1/R0.8029594.allCounties.csv
