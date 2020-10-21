@@ -44,7 +44,7 @@ if (!interactive()){
 }
 
 #                    *******  CHOOSE YOUR FAVORITE COUNTY HERE  *******
-if (!is.null(args$countyName) {
+if (!is.null(args$countyName)) {
    one_county <- args$countyName
 } else {
   one_county = counties[as.numeric(args$countyIndex)]
