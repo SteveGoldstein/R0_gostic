@@ -7,8 +7,8 @@ docker_image = steveg53703/epinow2-$(epiVersion):$(epiTag)
 
 executable = Rscript
 transfer_executable = false
-requirements = (Has_AVX2 =?= true)
-
+requirements = (Has_AVX2 =?= true) && (Poolname =?= "CHTC")
++WantFlocking = TRUE
 
 TMP = $(PROCESS) + 1
 

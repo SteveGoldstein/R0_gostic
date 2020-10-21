@@ -23,6 +23,7 @@ library(EpiNow2) # remotes::install_github("epiforecasts/EpiNow2")
 defaultArgs <- list (
     inFile = "WI.rds",
     countyIndex = 1,
+    countyName = NULL,
     cores = 1,
     chains = 2, 
     outFile = NULL
@@ -43,7 +44,11 @@ if (!interactive()){
 }
 
 #                    *******  CHOOSE YOUR FAVORITE COUNTY HERE  *******
-one_county = counties[as.numeric(args$countyIndex)]
+if (!is.null(args$countyName) {
+   one_county <- args$countyName
+} else {
+  one_county = counties[as.numeric(args$countyIndex)]
+}
 
 data_WI = data_WI_check %>%
     select(NAME, NEGATIVE, POSITIVE, DEATHS, DTH_NEW, POS_NEW, 

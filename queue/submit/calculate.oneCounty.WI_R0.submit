@@ -1,0 +1,39 @@
+### condor_submit -append CPUS=2 -append CHAINS=2 -countyIndex=41 -countyName=Outagamie
+universe = docker
+
+epiVersion = v1.0.0
+epiTag     = github
+docker_image = steveg53703/epinow2-$(epiVersion):$(epiTag)
+
+executable = Rscript
+transfer_executable = false
+requirements = (Has_AVX2 =?= true) && (Poolname =?= "CHTC")
++WantFlocking = TRUE
+
+DATE = 2020-10-19
+INFILE = data/WI.$(DATE).rds
+#OUTFILE = R0.$(DATE).$(CLUSTER).$(PROCESS).csv
+#OUTFILE = R0.$(DATE).$(countyIndex).$(CLUSTER).$(PROCESS).csv
+OUTFILE = R0.$(DATE).$(countyName).$(CLUSTER).$(PROCESS).csv
+
+
+#args = --vanilla JFMR.withInput.R  -inFile $BASENAME(INFILE) -outFile $(OUTFILE) -chains $(CHAINS) -cores $(CPUS) -countyIndex $(countyIndex)
+
+args = --vanilla JFMR.withInput.R  -inFile $BASENAME(INFILE) -outFile $(OUTFILE) -chains $(CHAINS) -cores $(CPUS) -countyName $(countyName)
+
+transfer_input_files = bin/JFMR.withInput.R, $(INFILE)
+transfer_output_remaps = "$(OUTFILE) = outdir/$(OUTFILE)"
+
+output    = queue/out/R0.$(countyName).$(CLUSTER).$(PROCESS).out
+error  = queue/error/R0.$(countyName).$(CLUSTER).$(PROCESS).err
+log    = queue/log/R0.$(countyName).cpus$(CPUS).$(CLUSTER).log
+
+## defaults  (override with -append on the cmd line.)
+CHAINS = 2
+CPUS = 1
+
+request_memory = 10 GB
+request_disk  =  1 GB
+request_cpus  = $(CPUS)
+
+queue
