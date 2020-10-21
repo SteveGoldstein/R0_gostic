@@ -23,7 +23,7 @@ library(EpiNow2) # remotes::install_github("epiforecasts/EpiNow2")
 defaultArgs <- list (
     inFile = "WI.rds",
     countyIndex = 1,
-    cores = 2,
+    cores = 1,
     chains = 2, 
     outFile = NULL
 )
@@ -34,7 +34,7 @@ args <- R.utils::commandArgs(trailingOnly = TRUE,
 
 
 data_WI_check  <- readRDS(args$inFile)
-counties = unique(data_WI_check$NAME)[3:74]
+counties = unique(data_WI_check$NAME)[2:73]
 
 final_df = {}
 

@@ -13,8 +13,9 @@ requirements = (Has_AVX2 =?= true)
 TMP = $(PROCESS) + 1
 
 countyIndex = $INT(TMP)
-INFILE = data/WI.2020-10-18.rds
-OUTFILE = R0.$(CLUSTER).$(PROCESS).csv
+DATE = 2020-10-19
+INFILE = data/WI.$(DATE).rds
+OUTFILE = R0.$(DATE).$(CLUSTER).$(PROCESS).csv
 
 args = --vanilla JFMR.withInput.R  -inFile $BASENAME(INFILE) -outFile $(OUTFILE) -chains $(CHAINS) -cores $(CPUS) -countyIndex $(countyIndex)
 
@@ -27,7 +28,7 @@ log    = queue/log/wiR0.$(CLUSTER).log
 
 ## defaults  (override with -append on the cmd line.)
 CHAINS = 2
-CPUS = 2
+CPUS = 1
 
 request_memory = 10 GB
 request_disk  =  1 GB
