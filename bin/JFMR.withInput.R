@@ -25,7 +25,9 @@ defaultArgs <- list (
     countyIndex = 1,
     countyName = NULL,
     cores = 1,
-    chains = 2, 
+    chains = 2,
+    inputFormat = "new",
+    test = FALSE,  ## limit #samples if TRUE
     outFile = NULL
 )
 
@@ -35,7 +37,13 @@ args <- R.utils::commandArgs(trailingOnly = TRUE,
 
 
 data_WI_check  <- readRDS(args$inFile)
+
 counties = unique(data_WI_check$NAME)[2:73]
+## hack to deal with DHS change in format;
+##   this will be removed when we switch to new pullWIData.R
+if (args$inputFormat == "old") {
+   counties = unique(data_WI_check$NAME)[3:74]
+}
 
 final_df = {}
 
@@ -133,11 +141,20 @@ d2 <- select(d, date, cases_corrected) %>%
 
 #future::plan("multiprocess", gc = TRUE, earlySignal = TRUE)
 
+### go fast if testing;
+if (as.logical(args$test)) {
+   nsamples <- 35
+   warmup  <- 10
+} else {
+  nsamples <- 100
+  warmup <- 200
+}
+
 estimates2 <- EpiNow2::epinow(reported_cases = d2, 
                               generation_time = generation_time,
                               delays = list(incubation_period, reporting_delay),
 			      horizon = 7, 
-			      samples = 1000, warmup = 200,
+			      samples = nsamples, warmup = warmup,
                               cores = as.numeric(args$cores),
                               chains = as.numeric(args$chains),
 			      verbose = TRUE, 
