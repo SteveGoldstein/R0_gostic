@@ -35,5 +35,6 @@ CPUS = 1
 request_memory = 10 GB
 request_disk  =  1 GB
 request_cpus  = $(CPUS)
+request_gpus = isUndefined(TotalGpus) ? 0 : 1
 
 queue
