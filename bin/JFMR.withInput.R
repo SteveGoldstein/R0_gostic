@@ -146,7 +146,7 @@ if (as.logical(args$test)) {
    nsamples <- 35
    warmup  <- 10
 } else {
-  nsamples <- 100
+  nsamples <- 1000
   warmup <- 200
 }
 
